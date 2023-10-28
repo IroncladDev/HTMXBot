@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
+  <script src="https://unpkg.com/htmx.org@1.9.6"></script>
+  <!-- <link rel="stylesheet" href="/dist/styles.css"> -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/styles.css"/>
+  <title>HTMX Chatbot</title>
+  <script>
+    tailwind.config = {
+      darkMode: ['class'],
+      theme: {
+        extend: {
+          colors: {
+            border: "rgb(var(--border))",
+            background: "rgb(var(--background))",
+            foreground: "rgb(var(--foreground))",
+            muted: {
+              DEFAULT: "rgb(var(--muted))",
+              foreground: "rgb(var(--muted-foreground))",
+            },
+            accent: "rgb(var(--accent))",
+          },
+        }
+      }
+    }
+  </script>
+</head>
+<body class="flex flex-col bg-background text-foreground">
+  <div class="flex gap-2 items-center px-4 py-3 border-b border-border bg-background">
+    <a class="inline-flex gap-2 select-none" href="/"/>  
+      <span class="inline-flex items-center">
+        <span class="font-bold text-2xl">&lt;</span>
+        <span class="inline-flex flex-col mx-0.5 mt-0.5 text-muted-foreground">
+          <span style="font-size: 8px;">AA</span>      
+          <span style="font-size: 8px;">AA</span>      
+        </span>
+        <span class="text-accent font-bold text-2xl">/</span><span class="font-bold text-2xl">&gt;</span>
+      </span>
+      <span class="text-4xl font-semibold inline-flex">
+        <span class="text-bold">H</span>
+        <span class="text-muted-foreground text-3xl self-end">A</span>
+        <span class="text-muted-foreground text-accent">A</span>
+        <span class="text-muted-foreground text-3xl">A</span>
+        <span class="text-muted-foreground text-3xl self-end">A</span>
+        <span class="text-accent">S</span>
+      </span>
+    </a>
+    
+    <div class="grow"></div>
+
+    <a class="px-2 py-1.5 rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground" href="#features">Features</a>
+    <a class="px-2 py-1.5 rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground" href="#features">Models</a>
+    <a class="px-2 py-1.5 rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground" href="#features">Pricing</a>
+    <a href="/chat">
+      <button class="bg-accent rounded-lg px-2 py-1.5 hover:brightness-90 text-sm transition-colors ml-2">Get Started</button>
+    </a>
+  </div>
+</body>
+</html>

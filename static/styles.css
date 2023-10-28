@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 248 250 252;
+    --foreground: 2 6 23;
+    --border: 203 213 225;
+    --muted: 226 232 240;
+    --muted-foreground: 51 65 85;
+    --accent: 61 114 215;
+  }
+
+  .dark {
+    --background: 15 23 42;
+    --foreground: 248 250 252;
+    --border: 30 41 59;
+    --muted: 30 41 59;
+    --muted-foreground: 100 116 139;
+  }
+}

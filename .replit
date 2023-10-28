@@ -1,0 +1,15 @@
+run="bun src/index.ts"
+modules = ["bun-1.0:v1-20230911-f253fb1"]
+
+hidden = [".config", "bun.lockb"]
+
+disableInstallBeforeRun = true
+disableGuessImports = true
+
+[nix]
+channel = "stable-22_11"
+
+[deployment]
+build = ["sh", "-c", "mkdir .build && bun build src/index.ts > .build/index.js"]
+run = ["bun", ".build/src/index.js"]
+deploymentTarget = "cloudrun"

@@ -1,0 +1,34 @@
+{
+  "name": "nodejs-typescript",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "type": "module",
+  "scripts": {
+    "init-vectors": "bun src/init-vectors.ts",
+    "format": "prettier --ignore-path .gitignore --write \"src/*.{ts,tsx}\" --plugin=prettier-plugin-organize-imports",
+    "build": "npx tailwindcss build static/styles.css -o static/dist/styles.css"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@replit/ai-modelfarm": "^0.0.3",
+    "@supabase/supabase-js": "^2.38.1",
+    "@types/prompt-sync": "^4.2.1",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "glob": "^10.3.10",
+    "gpt3-tokenizer": "^1.1.5",
+    "node-fetch": "^3.3.1",
+    "prompt-sync": "^4.2.0",
+    "socket.io": "^4.7.2",
+    "tailwindcss": "^3.3.5"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.20",
+    "@types/node": "^20.8.7",
+    "bun-types": "^1.0.7",
+    "prettier": "^3.0.3",
+    "prettier-plugin-organize-imports": "^3.2.3"
+  }
+}

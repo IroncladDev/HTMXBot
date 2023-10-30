@@ -8,15 +8,125 @@
     --foreground: 2 6 23;
     --border: 203 213 225;
     --muted: 226 232 240;
-    --muted-foreground: 51 65 85;
+    --muted-foreground: 100 117 139;
     --accent: 61 114 215;
   }
 
   .dark {
     --background: 15 23 42;
     --foreground: 248 250 252;
-    --border: 30 41 59;
+    --border: 51 65 85;
     --muted: 30 41 59;
     --muted-foreground: 100 116 139;
   }
+}
+
+.avatar {
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: white;
+  @apply w-8 h-8 shrink-0 rounded-full border border-border;
+}
+
+.avatar.muted {
+  filter: grayscale(45%) brightness(80%);
+}
+
+.markdown {
+  @apply flex flex-col gap-2 text-slate-800 dark:text-slate-300 text-sm;
+}
+
+.markdown.muted {
+  @apply text-muted-foreground;
+}
+
+.markdown strong {
+  @apply text-foreground font-bold;
+}
+
+.markdown h1, h2, h3, h4, h5, h6 {
+  @apply text-foreground font-semibold;
+}
+
+.markdown h1 {
+  @apply text-4xl font-bold;
+}
+
+.markdown h2 {
+  @apply text-3xl font-bold;
+}
+
+.markdown h3 {
+  @apply text-2xl;
+}
+
+.markdown h4 {
+  @apply text-xl;
+}
+
+.markdown h5 {
+  @apply text-lg;
+}
+
+.markdown h6 {
+  @apply text-base;
+}
+
+.markdown img {
+  @apply rounded-md max-w-xs;
+}
+
+.markdown code {
+  @apply p-0.5 border border-border text-xs text-foreground rounded-sm;
+  font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
+}
+
+.markdown pre {
+  @apply !px-2 !py-1 !bg-transparent border border-border rounded-sm text-xs;
+  font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
+}
+
+.markdown pre code {
+  @apply p-0 border-none rounded-none;
+}
+
+.markdown blockquote {
+  @apply border-l-2 border-border pl-2 italic;
+}
+
+code[class*="language-"],
+pre[class*="language-"] {
+  background: none;
+  font-family: "Fira Code", Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  text-align: left;
+  white-space: pre-wrap;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: break-word;
+  line-height: 1.5;
+  -moz-tab-size: 2;
+  -o-tab-size: 2;
+  tab-size: 2;
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+  @apply text-foreground;
+}
+
+.mesh-overlay {
+  @apply flex grow p-4 md:p-8 justify-center;
+  background:
+  repeating-linear-gradient(0deg,
+    transparent, transparent 128px,
+    rgba(var(--border) / 0.75) 128px, rgba(var(--border) / 0.75) 129px),
+  repeating-linear-gradient(90deg,
+    transparent, transparent 128px,
+  rgba(var(--border) / 0.75) 128px, rgba(var(--border) / 0.75) 129px);
+}
+
+.glasscard {
+  min-width: 240px;
+  @apply flex flex-col gap-4 max-w-sm overflow-hidden border border-border shadow-md p-2 rounded-lg backdrop-blur-[2px];
 }

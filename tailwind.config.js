@@ -1,9 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  darkMode: ['class'],
+  darkMode: 'class',
+  mode: "jit",
   purge: [
     './static/**/*.html',
-    './static/**/*.js',
     './static/**/*.css',
   ],
   content: [],

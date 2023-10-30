@@ -5,6 +5,7 @@
   "main": "index.ts",
   "type": "module",
   "scripts": {
+    "dev": "bun src/index.ts & npx tailwindcss -i ./static/styles.css -o ./static/dist/styles.css --watch",
     "init-vectors": "bun src/init-vectors.ts",
     "format": "prettier --ignore-path .gitignore --write \"src/*.{ts,tsx}\" --plugin=prettier-plugin-organize-imports",
     "build": "npx tailwindcss build static/styles.css -o static/dist/styles.css"

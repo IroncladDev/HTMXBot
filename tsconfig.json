@@ -1,21 +1,33 @@
 {
-	"compilerOptions": {
-		"lib": [
-			"ESNext"
-		],
-		"module": "esnext",
-		"target": "esnext",
-		"moduleResolution": "node",
-		"strict": true,
-		"downlevelIteration": true,
-		"skipLibCheck": true,
-		"jsx": "react-jsx",
-		"allowSyntheticDefaultImports": true,
-		"forceConsistentCasingInFileNames": true,
-		"allowJs": true,
-		"types": [
-			"bun-types" // add Bun global
-		]
-	},
-	"moduleDetection": "force"
+  "compilerOptions": {
+    "lib": [
+      "ESNext"
+    ],
+    "module": "esnext",
+    "target": "esnext",
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "incremental": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "esModuleInterop": true,
+    "types": [
+      "bun-types"
+    ]
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ],
+  "moduleDetection": "force"
 }

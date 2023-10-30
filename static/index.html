@@ -6,32 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
   <script src="https://unpkg.com/htmx.org@1.9.6"></script>
-  <!-- <link rel="stylesheet" href="/dist/styles.css"> -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="/styles.css"/>
+  <link rel="stylesheet" href="/dist/styles.css">
+  <link rel="stylesheet" href="/index.css"/>
   <title>HTMX Chatbot</title>
-  <script>
-    tailwind.config = {
-      darkMode: ['class'],
-      theme: {
-        extend: {
-          colors: {
-            border: "rgb(var(--border))",
-            background: "rgb(var(--background))",
-            foreground: "rgb(var(--foreground))",
-            muted: {
-              DEFAULT: "rgb(var(--muted))",
-              foreground: "rgb(var(--muted-foreground))",
-            },
-            accent: "rgb(var(--accent))",
-          },
-        }
-      }
-    }
-  </script>
 </head>
 <body class="flex flex-col bg-background text-foreground">
-  <div class="flex gap-2 items-center px-4 py-3 border-b border-border bg-background">
+  <!-- Navbar -->
+  <nav class="flex gap-2 items-center px-2 py-1.5 min-[512px]:px-4 min-[512px]:py-3 border-b border-border bg-background h-12 min-[512px]:h-16 bg-background">
     <a class="inline-flex gap-2 select-none" href="/"/>  
       <span class="inline-flex items-center">
         <span class="font-bold text-2xl">&lt;</span>
@@ -41,7 +22,7 @@
         </span>
         <span class="text-accent font-bold text-2xl">/</span><span class="font-bold text-2xl">&gt;</span>
       </span>
-      <span class="text-4xl font-semibold inline-flex">
+      <span class="hidden min-[512px]:inline-flex text-4xl font-semibold">
         <span class="text-bold">H</span>
         <span class="text-muted-foreground text-3xl self-end">A</span>
         <span class="text-muted-foreground text-accent">A</span>
@@ -53,12 +34,356 @@
     
     <div class="grow"></div>
 
-    <a class="px-2 py-1.5 rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground" href="#features">Features</a>
-    <a class="px-2 py-1.5 rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground" href="#features">Models</a>
-    <a class="px-2 py-1.5 rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground" href="#features">Pricing</a>
-    <a href="/chat">
-      <button class="bg-accent rounded-lg px-2 py-1.5 hover:brightness-90 text-sm transition-colors ml-2">Get Started</button>
-    </a>
+    <div class="text-xs md:text-base flex gap-2 items-center">
+      <a class="p-1 md:px-2 md:py-1.5 rounded-lg hover:bg-muted transition-colors hover:underline" href="#features">Features</a>
+      <a class="p-1 md:px-2 md:py-1.5 rounded-lg hover:bg-muted transition-colors hover:underline" href="#presets">Presets</a>
+      <a class="p-1 md:px-2 md:py-1.5 rounded-lg hover:bg-muted transition-colors hover:underline" href="#pricing">Pricing</a>
+      <a href="/chat">
+        <button class="bg-accent rounded-lg px-1.5 py-1 text-xs md:text-base md:px-2 md:py-1.5 hover:brightness-90 text-sm transition-colors whitespace-nowrap">Get Started</button>
+      </a>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <div class="hero flex flex-col">
+    <div 
+      class="overlay flex flex-col grow items-center justify-center p-4 header opacity-0"
+      _="init transition my opacity to 1 over 1000ms"
+    >
+      <div class="p-4 flex flex-col gap-4 items-center">
+        <div class="flex flex-col items-center gap-2">
+          <h1 
+            class="text-6xl md:text-8xl font-bold flex leading-none text-slate-100 opacity-0"
+            _="init wait 500ms then transition my opacity to 1 over 1000ms"
+          >
+            <span>&lt;H</span>
+            <span class="text-slate-400 text-5xl md:text-7xl self-end">A</span>
+            <span class="text-slate-400">A</span>
+            <span class="text-slate-400 text-5xl md:text-7xl">A</span>
+            <span class="text-slate-400 text-5xl md:text-7xl self-end">A</span>
+            <span class="text-accent">S</span>
+            <span>&gt;</span>
+          </h1>
+  
+          <p 
+            class="text-lg italic text-slate-100"
+          >
+            <span class="opacity-0" _="init wait 1000ms then transition my opacity to 1 over 1000ms">Hypermedia And AI As A Service</span>
+            <span class="opacity-0" _="init wait 1500ms then transition my opacity to 1 over 1000ms">/ HTMX Chatbot</span>
+            <span class="opacity-0" _="init wait 2000ms then transition my opacity to 1 over 1000ms">(same thing)</span>
+          </p>
+        </div>
+
+        <a 
+          href="#pricing"
+          class="opacity-0"
+          _="init wait 2500ms then transition opacity to 1 over 1000ms"
+        >
+          <button class="bg-accent px-4 py-2 rounded-lg hover:brightness-90 transition-all text-slate-100">Join the Insanity</button>
+        </a>
+      </div>
+    </div>
   </div>
+
+  <!-- Features -->
+  <div class="min-h-screen flex bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-950 border-t-2 border-border" id="features">
+    <div class="mesh-overlay min-h-0 min-w-0">
+      <div class="max-w-3xl w-full flex flex-col gap-8 py-8 md:gap-32 md:py-32">
+
+        <!-- Stack Knowledge -->
+        <div 
+          class="flex flex-col md:flex-row items-center gap-8"
+          style="transition: all 800ms ease-out"
+          _="on intersection(intersecting) having threshold 0.5
+          if intersecting
+            transition my opacity to 1 over 500ms
+          else 
+            transition my opacity to 0 over 500ms"
+        >
+          <!-- Conversation Preview Card -->
+          <div 
+            class="glasscard bg-gradient-to-br from-accent/10 to-background/0"
+          >
+            <div class="flex flex-col">
+              <div class="flex gap-2 items-center pb-0">
+                <div class="w-8 flex flex-col items-center shrink-0 self-stretch">
+                  <div class="grow"></div>
+                  <div class="w-2 h-2 rounded-full bg-border"></div>
+                  <div class="w-0.5 grow bg-border"></div>
+                </div>
+                <p class="text-sm text-muted-foreground">Explain to me what HTMX is</p>
+              </div>
+
+              <div class="flex gap-2 pt-0">
+                <div class="w-8 h-10 flex flex-col items-center shrink-0 self-stretch">
+                  <div class="w-0.5 grow bg-border"></div>
+                  <div 
+                    class="avatar"
+                    style="background-image: url(/images/bison.png)"
+                  ></div>
+                </div>
+                <div class="flex flex-col gap-1 pt-2">
+                  <span class="font-bold text-sm text-slate-700 dark:text-slate-400">htmx.org / influencer money (same thing)</span>
+                  <div class="markdown muted">
+                    <p>htmx is a javascript library that makes it easy to build modern web applications with html. it's a thin layer on top of the browser's built-in features...</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex flex-col">
+              <div class="flex gap-2 items-center">
+                <div class="w-8 flex flex-col items-center shrink-0 self-stretch">
+                  <div class="grow"></div>
+                  <div class="w-2 h-2 rounded-full bg-border"></div>
+                  <div class="w-0.5 grow bg-border"></div>
+                </div>
+                <p class="text-sm text-muted-foreground">How do I swap the HTML of an element on click?</p>
+              </div>
+
+              <div class="flex gap-2 pt-0">
+                <div class="w-8 h-10 flex flex-col items-center shrink-0 self-stretch">
+                  <div class="w-0.5 grow bg-border"></div>
+                  <div 
+                    class="avatar"
+                    style="background-image: url(/images/bison.png)"
+                  ></div>
+                </div>
+                <div class="flex flex-col gap-1 pt-2">
+                  <span class="font-bold text-sm font-bold text-sm text-slate-700 dark:text-slate-400">htmx.org / influencer money (same thing)</span>
+                  <div class="markdown muted grow min-w-0">
+                    <p>to swap the html of an element after clicking on it you can use hx-swap="outerHTML" like so</p>
+
+                    <pre class="language-html">&lt;div hx-swap="outerHTML"&gt;<br/>  I'm about to be swapped!<br/>&lt;/div&gt;</pre>
+
+                    <p>clicking on the div will swap it's contents with the contents of the hx-swap attribute</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div 
+            class="flex flex-col gap-4 items-center text-center md:items-start md:text-left"
+          >
+            <div class="flex flex-col gap-1">
+              <h2 class="text-4xl font-bold">Stack Knowledge</h2>
+              <h3 class="text-xl text-muted-foreground italic">HTMX & Hyperscript.js</h3>
+            </div>
+            <div class="flex flex-col gap-2">
+              <p>Trained on the source code of HTMX and Hyperscript. Docs are a thing of the past</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Memes & Lore -->
+        <div 
+          class="flex flex-col md:flex-row-reverse items-center gap-8"
+          style="transition: all 800ms ease-out"
+          _="on intersection(intersecting) having threshold 0.5
+          if intersecting
+            transition my opacity to 1 over 500ms
+          else 
+            transition my opacity to 0 over 500ms"
+        >
+          <!-- Conversation Preview Card -->
+          <div 
+            class="glasscard bg-gradient-to-bl from-accent/10 to-background/0 shrink-0"
+          >
+            <div class="flex flex-col">
+              <div class="flex gap-2 items-center pb-0">
+                <div class="w-8 flex flex-col items-center shrink-0 self-stretch">
+                  <div class="grow"></div>
+                  <div class="w-2 h-2 rounded-full bg-border"></div>
+                  <div class="w-0.5 grow bg-border"></div>
+                </div>
+                <p class="text-sm text-muted-foreground">What's your favorite meme about HTMX?</p>
+              </div>
+
+              <div class="flex gap-2 pt-0">
+                <div class="w-8 h-10 flex flex-col items-center shrink-0 self-stretch">
+                  <div class="w-0.5 grow bg-border"></div>
+                  <div 
+                    class="avatar"
+                    style="background-image: url(/images/bison.png)"
+                  ></div>
+                </div>
+                <div class="flex flex-col gap-1 pt-2">
+                  <span class="font-bold text-sm text-slate-700 dark:text-slate-400">htmx.org / influencer money (same thing)</span>
+                  <div class="markdown muted">
+                    <p>lol this one's pretty good</p>
+                    <img src="https://pbs.twimg.com/media/F52TWJ6XwAAk5b8?format=jpg&name=small" alt="HTMX Meme" width="300"/>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div class="flex flex-col gap-4 items-center text-center md:items-start md:text-left">
+            <div class="flex flex-col gap-1">
+              <h2 class="text-4xl font-bold">Memes & Lore</h2>
+              <h3 class="text-xl text-muted-foreground italic">Trained on Twitter, Built for laughs</h3>
+            </div>
+            <div class="flex flex-col gap-2">
+              <p>Trained on thousands of tweets, stocked with memes, and knows the origins of past HTMX trends</p>
+              <p>How sweet it is</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Presets -->
+  <div class="flex flex-col py-8 border-t-2 border-border min-h-screen items-center justify-center" id="presets">
+    <div class="flex flex-col gap-8 max-w-3xl">
+      <h2 class="text-3xl font-bold text-center">Presets</h2>
+
+      <div class="flex flex-wrap justify-center w-full gap-4">
+        <div class="glasscard grow max-w-xs basis-0 bg-gradient-to-br from-red-500/10 to-background/0">
+          <div class="flex flex-col gap-2">
+            <span class="font-bold text-xl text-center">htmx.org</span>
+            <img src="/images/bison.png" width="128" height="128" class="rounded-xl bg-white self-center border border-border"/>
+          </div>
+          <p class="text-sm text-center text-slate-800 dark:text-slate-300">Acts most like the official <a class="underline text-accent" href="https://twitter.com/htmx_org" target="_blank" rel="noreferrer">HTMX Twitter</a>, prioritizing humor over everything else. Talks in a more serious manner when teaching you how to code in HTMX or Hyperscript.</p>
+        </div>
+
+        <div class="glasscard grow max-w-xs basis-0 bg-gradient-to-br from-green-500/10 to-background/0">
+          <div class="flex flex-col gap-2">
+            <span class="font-bold text-xl text-center">Professor Carson</span>
+            <img src="/images/carson.png" width="128" height="128" class="rounded-xl bg-white self-center border border-border"/>
+          </div>
+          <p class="text-sm text-center text-slate-800 dark:text-slate-300">Acts like Carson Gross, the Creator of HTMX and Hyperscript. Talks like a professor / technical documentation (same thing), and is the best option for learning HTMX/Hyperscript</p>
+        </div>
+
+        <div class="glasscard grow max-w-xs basis-0 bg-gradient-to-br from-orange-500/10 to-background/0">
+          <div class="flex flex-col gap-2">
+            <span class="font-bold text-xl text-center">Grug</span>
+            <img src="/images/grug.png" width="128" height="128" class="rounded-xl bg-white self-center border border-border"/>
+          </div>
+          <p class="text-sm text-center text-slate-800 dark:text-slate-300">Senior Programmer packed with caveman vibes all the way. Shares great coding advice, stone-age humor, and how to kidnap a Bison with Laser Eyes.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pricing -->
+  <div class="flex flex-col border-t-2 py-8 border-border min-h-screen items-center justify-center" id="pricing" style="background: radial-gradient(circle at 50% 100%, #3b82f665, #3b82f625,  #3b82f600 75%)">
+    <div class="flex-col max-w-3xl flex gap-8">
+      <div class="flex flex-col gap-2 w-full">
+        <h2 class="text-3xl font-bold text-center">Pricing</h2>
+        <h3 class="text-xl italic text-muted-foreground text-center">Gotta get that influencer money somewhere</h3>
+      </div>
+   
+      <div class="flex flex-wrap justify-center w-full gap-4">
+        <div class="glasscard grow max-w-xs basis-0 bg-gradient-to-br from-purple-500/10 to-background/0 !p-4">
+          <div class="flex flex-col gap-1">
+            <span class="font-bold text-xl">Unpaid Intern</span>
+            <span class="italic text-muted-foreground text-lg font-semibold">$0 per month - free</span>
+          </div>
+          <ul class="list-disc list-inside text-sm grow">
+            <li>Access to all presets</li>
+            <li>Light mode</li>
+            <li>Free forever</li>
+            <li>No payment method required</li>
+          </ul>
+          <button class="w-full bg-accent text-foreground p-2 rounded-md hover:brightness-90">Get Started for Free</button>
+        </div>
+  
+        <div class="glasscard grow max-w-xs basis-0 bg-gradient-to-br from-blue-500/10 to-background/0 !p-4">
+          <div class="flex flex-col gap-1">
+            <span class="font-bold text-xl">Junior Developer</span>
+            <span class="italic text-muted-foreground text-lg font-semibold">Unpaid Intern / Junior Developer (same thing)</span>
+          </div>
+          <ul class="list-disc list-inside text-sm grow">
+            <li>Exactly the same as Unpaid Intern</li>
+            <li>Get Ratio'd by htmx.org</li>
+            <li>Access to an AI Girlfriend preset (big if true)</li>
+          </ul>
+          <button class="w-full bg-accent text-foreground p-2 rounded-md hover:brightness-90">Get Started</button>
+        </div>
+  
+        <div class="glasscard grow max-w-xs basis-0 bg-gradient-to-br from-green-500/10 to-background/0 !p-4">
+          <div class="flex flex-col gap-1">
+            <span class="font-bold text-xl">Senior Developer</span>
+            <span class="italic text-muted-foreground text-lg font-semibold">DM your card details to <a href="https://twitter.com/htmx_org" target="_blank" rel="noreferrer" class="text-accent underline">@htmx_org</a></span>
+          </div>
+          <ul class="list-disc list-inside text-sm grow">
+            <li>Same benefits as Unpaid Interns</li>
+            <li>Same benefits as Junior Developers</li>
+            <li>Access to <a href="https://htmx.org/discord" target="_blank" rel="noreferrer">Premium Support</a></li>
+            <li>Lifetime access to the free trial</li>
+          </ul>
+          <button class="w-full bg-accent text-foreground p-2 rounded-md hover:brightness-90">Get Started</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="flex flex-col divide-y divide-border bg-muted items-center">
+    <div class="flex gap-4 py-4 max-w-3xl w-full">
+      <div class="flex gap-2 flex-col">
+        <h2 class="text-2xl font-bold flex leading-none text-slate-100">
+          <span>&lt;H</span>
+          <span class="text-slate-400 text-xl self-end">A</span>
+          <span class="text-slate-400">A</span>
+          <span class="text-slate-400 text-xl">A</span>
+          <span class="text-slate-400 text-xl self-end">A</span>
+          <span class="text-accent">S</span>
+          <span>&gt;</span>
+        </h2>
+
+        <p class="text-sm text-slate-400">
+          Hypermedia and AI as a Service / HTMX Chatbot (same thing)
+        </p>
+      </div>
+
+      <div class="flex gap-2 flex-wrap justify-end">
+        <a class="min-w-[128px] text-center grow basis-0" href="#">Home</a>
+        <a class="min-w-[128px] text-center grow basis-0" href="#features">Features</a>
+        <a class="min-w-[128px] text-center grow basis-0" href="#presets">Presets</a>
+        <a class="min-w-[128px] text-center grow basis-0" href="#pricing">Pricing</a>
+        <a class="min-w-[128px] text-center grow basis-0" href="/chat">Chat</a>
+        <a class="min-w-[128px] text-center grow basis-0" href="https://github.com/IroncladDev/HTMXBot" target="_blank" rel="noreferrer">Fork on Github</a>
+      </div>
+    </div>
+    <div class="flex gap-2 w-full max-w-3xl py-4">
+      <span class="text-sm text-muted-foreground">Made with 🔥 by <a href="https://connerow.dev" target="_blank" rel="noreferrer" class="underline">IroncladDev</a> &copy; 2023
+        <span _="init js return new Date().getFullYear() end then if it is not 2023 put '- ' + it into my.innerHTML"></span>
+      </span>
+    </div>
+  </footer>
+
+  <!-- Theme Toggle -->
+  <div 
+    class="fixed right-2 bottom-2 rounded-full bg-background p-2 cursor-pointer hover:bg-muted transition-colors border-2 border-border" 
+    _="on click 
+      toggle .dark on <html/>
+      if not the closest <.dark/>
+        show #sun-icon
+        hide #moon-icon
+      else
+        show #moon-icon
+        hide #sun-icon"
+  >
+    <i 
+      data-lucide="sun"
+      id="sun-icon"
+      _="init if not the closest <.dark/> then show me else hide me"
+    ></i>
+    <i 
+      data-lucide="moon"
+      id="moon-icon"
+      _="init if not the closest <.dark/> then hide me else show me"
+    ></i>
+  </div>
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    lucide.createIcons();
+  </script>
 </body>
 </html>

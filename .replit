@@ -1,4 +1,4 @@
-run="bun src/index.ts"
+run="bun run dev"
 modules = ["bun-1.0:v1-20230911-f253fb1"]
 
 hidden = [".config", "bun.lockb"]

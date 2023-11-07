@@ -1,4 +1,4 @@
-import { completeStream } from "@replit/ai-modelfarm";
+import { ChatMessage, completeStream } from "@replit/ai-modelfarm";
 import { maxOutputTokens, prompts, temperature } from "../config";
 import { similaritySearch } from "../lib/utils";
 
@@ -7,18 +7,24 @@ import { similaritySearch } from "../lib/utils";
  */
 export default async function stream({
   prompt,
-  onCompletionStream,
   promptKey,
+  prev,
 }: {
   prompt: string;
-  onCompletionStream: (completion: string) => void;
   promptKey: keyof typeof prompts;
+  prev?: [ChatMessage, ChatMessage];
 }) {
-  const relevantContext = await similaritySearch(prompt);
+  let relevantContext: Array<string> = [];
+
+  try {
+    relevantContext = await similaritySearch(prompt);
+  } catch (e) {
+    console.log(e);
+  }
 
   const completionResponse = await completeStream({
     model: "text-bison",
-    prompt: prompts[promptKey](relevantContext, prompt),
+    prompt: prompts[promptKey](relevantContext, prompt, prev),
     maxOutputTokens,
     temperature,
   });
@@ -30,16 +36,6 @@ export default async function stream({
   }
 
   const generator = completionResponse.value;
-  let out = "";
 
-  try {
-    for await (const chunk of generator) {
-      onCompletionStream(chunk.completion);
-      out += chunk.completion;
-    }
-  } catch (error) {
-    console.error("An error occurred while iterating:", error);
-  }
-
-  return out;
+  return generator;
 }

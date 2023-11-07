@@ -1,5 +1,11 @@
 # HTMX Chatbot
 
-- Still a work in progress
-- Only works on [Replit](https://replit.com), btw
-- Still tryna write all the lore 'n stuff
+## Todo
+- Meta tags
+- Readme/docs
+- License
+- Prompt tuning
+- Demo
+- Submission
+
+- Only works on [Replit](https://replit.com), **btw**

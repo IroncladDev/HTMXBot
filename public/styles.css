@@ -1,0 +1,124 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 248 250 252;
+    --foreground: 30 41 59;
+    --border: 203 213 225;
+    --muted: 226 232 240;
+    --muted-foreground: 100 117 139;
+    --accent: 61 114 215;
+  }
+
+  .dark {
+    --background: 15 23 42;
+    --foreground: 226 232 240;
+    --border: 46 60 80;
+    --muted: 30 41 59;
+    --muted-foreground: 100 116 139;
+  }
+}
+
+body, html {
+  scroll-behavior: smooth;
+}
+
+/* Avatar */
+.avatar { @apply bg-cover bg-white bg-no-repeat bg-center w-8 h-8 shrink-0 rounded-full border border-border }
+.avatar.muted { filter: grayscale(45%) brightness(80%) }
+
+/* CSS Mesh background */
+.mesh-overlay {
+  background:
+  repeating-linear-gradient(0deg,
+    transparent, transparent 128px,
+    rgba(var(--border) / 0.65) 128px, rgba(var(--border) / 0.65) 129px),
+  repeating-linear-gradient(90deg,
+    transparent, transparent 128px,
+  rgba(var(--border) / 0.65) 128px, rgba(var(--border) / 0.65) 129px);
+}
+@media(max-width: 768px) {
+  .mesh-overlay.chat {
+    background-image: none;
+    @apply bg-background;
+  }
+}
+
+/* Glassmorphic CSS card */
+.glasscard { @apply flex flex-col gap-4 max-w-sm overflow-hidden border border-border shadow-md p-2 rounded-lg backdrop-blur-[2px] min-w-[240px] }
+
+/* Scroll container / scrollbar styles */
+.scroll-container::-webkit-scrollbar { @apply w-2 }
+.scroll-container::-webkit-scrollbar-track { @apply bg-black/5 dark:bg-black/10 }
+.scroll-container::-webkit-scrollbar-thumb { @apply bg-slate-400 dark:bg-slate-700 rounded-2xl }
+
+/* Dialog / backdrop */
+dialog { @apply p-4 min-w-[240px] max-w-xs min-h-[160px] max-h-[90vh] bg-background/95 bg-gradient-to-br from-accent/10 to-background/25 rounded-lg border border-border text-foreground mt-24 }
+::backdrop { @apply bg-slate-950/50 backdrop-blur-[4px] }
+
+/* Selected preset image */
+.selected { @apply ring-2 ring-accent ring-offset-transparent }
+
+/* Selected chat element */
+.active { @apply ring-1 ring-accent/50 ring-offset-transparent bg-accent/10 }
+
+/* Sidebar */
+#sidebar { @apply hidden }
+#sidebar.visible { @apply flex }
+
+/* Conditional text color for dark/light */
+.text-mid { @apply text-slate-800 dark:text-slate-400 }
+
+/* Buttons */
+button {
+  @apply rounded-lg px-3 py-2 text-sm text-foreground bg-accent hover:bg-accent/50 transition-colors whitespace-nowrap cursor-pointer flex gap-1 items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed;
+}
+button.muted {
+  @apply bg-muted border border-border hover:bg-muted/50;
+}
+button.glass {
+  @apply bg-accent/10 hover:bg-accent/20 border border-border;
+}
+button.icon {
+  @apply w-9 h-9 rounded p-2;
+}
+
+/* Markdown styles */
+.markdown { @apply flex flex-col gap-2 text-slate-800 dark:text-slate-400 text-sm }
+.markdown.muted { @apply text-muted-foreground }
+.markdown strong { @apply text-foreground font-semibold }
+.markdown a { @apply text-accent underline }
+.markdown h1, h2, h3, h4, h5, h6 { @apply font-semibold }
+.markdown h1 { @apply text-4xl }
+.markdown h2 { @apply text-3xl }
+.markdown h3 { @apply text-2xl }
+.markdown h4 { @apply text-xl }
+.markdown h5 { @apply text-lg }
+.markdown h6 { @apply text-base }
+.markdown code { @apply p-0.5 border border-border text-xs text-muted-foreground rounded-sm font-code }
+.markdown pre { @apply !p-2 border border-border rounded text-xs whitespace-pre-wrap bg-black/5 dark:bg-black/10 font-code }
+.markdown pre code { @apply !p-0 border-none rounded-none }
+code[class*="language-"] {
+  @apply font-code bg-transparent text-left whitespace-pre-wrap break-normal hyphens-none;
+  word-spacing: normal;
+  word-wrap: break-word;
+  tab-size: 2;
+}
+.markdown blockquote { @apply border-l-2 border-border pl-2 italic }
+.markdown img { @apply rounded-md max-w-[280px] max-h-[280px] }
+.dark .markdown img {
+  filter: grayscale(10%) brightness(80%);
+  transition: 0.25s;
+}
+.dark .markdown img:hover { filter: grayscale(0%) brightness(100%) }
+
+/* Highlight.js syntax highlighting */
+.hljs, .hljs-operator, .hljs-punctuation, .hljs-subst { @apply text-muted-foreground }
+.hljs-comment, .hljs-attr, .hljs-link, .hljs-literal, .hljs-number, .hljs-symbol, .hljs-variable.constant_, .hljs-meta, .hljs-meta .hljs-string { @apply text-slate-700 dark:text-slate-500 }
+.hljs-tag, .hljs-bullet, .hljs-deletion, .hljs-name, .hljs-selector-tag, .hljs-template-variable, .hljs-variable, .hljs-class .hljs-title, .hljs-title, .hljs-title.class_, .hljs-addition, .hljs-code, .hljs-string, .hljs-title.class_.inherited__, .hljs-built_in, .hljs-doctag, .hljs-quote, .hljs-regexp, .hljs-attribute, .hljs-function .hljs-title, .hljs-section, .hljs-title.function_, .ruby .hljs-property, .hljs-keyword { @apply text-mid }
+.hljs-strong, .hljs-meta, .hljs-meta-keyword { @apply font-bold }
+.diff .hljs-meta, .hljs-template-tag, .hljs-type { @apply text-foreground }
+.hljs-operator { opacity: 0.7 }
+.hljs-emphasis { @apply text-accent italic }

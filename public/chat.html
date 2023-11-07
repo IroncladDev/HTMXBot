@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en" class="dark" _="init js return localStorage.getItem('theme') end
+  if it is 'light'
+    remove .dark from me">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://unpkg.com/htmx.org@1.9.6"></script>
+  <script src="https://unpkg.com/htmx.org/dist/ext/ws.js"></script>
+  <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/languages/xml.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/languages/typescript.min.js"></script>
+  <link rel="stylesheet" href="/public/dist/styles.css">
+  <title>HTMX Chatbot</title>
+  <script type="text/hyperscript">
+    // Loads and returns all conversations from localStorage
+    def loadConvos()
+      js return JSON.parse(localStorage.getItem('conversations')) || [] end
+      return it
+    end
+
+    // Generates a random ID when a new conversation is created
+    def randomCid()
+      js return "c-" + Math.random().toString(36).slice(2) end
+      return it
+    end
+
+    // Generates a random conversation name
+    def randomConvoName()
+      set topics to ["HTMX", "Shill", "Meme", "Code", "Codebase", "Bug", "Pain", "Hypermedia", "Stone Age", "Markup", "Frontend", "Backend", "Mid", "Library", "Framework", "Hyper"]
+      set verbs to ["talk", "chat", "conversation", "lecture", "debate", "discussion", "war", "gossip", "chatter", "thunderdome", "warzone", "warroom"]
+      return `${random in topics} ${random in verbs}`
+    end
+
+    // Evaluates when to show the delete option
+    def evalDeleteOption()
+      js return loadConvos().length end
+      if it is less than 2
+        hide #delete-button 
+      else 
+        show #delete-button
+      end
+    end
+  </script>
+</head>
+<body class="min-w-screen min-h-screen relative" style="background: radial-gradient(circle at 100% 0%, rgb(var(--muted)), rgb(var(--background)), rgb(var(--background)))">
+  <div class="md:flex md:gap-2 md:p-2 absolute inset-0 mesh-overlay chat">
+    <!-- Sidebar -->
+    <div class="max-md:absolute max-md:z-10 max-md:bg-background max-md:border-r top-0 left-0 min-h-full w-[240px] flex flex-col md:border border-border shadow-2xl md:rounded-lg backdrop-blur-[3px] bg-gradient-to-b from-accent/10 to-background/0 visible" id="sidebar">
+      <!-- Buttons -->
+      <div class="flex gap-1 p-1">
+        <!-- Theme Toggle -->
+        <button 
+          class="glass icon"
+          _="on click
+            toggle .dark on <html/>
+            if not the closest <.dark/>
+              show #sun-icon
+              hide #moon-icon
+              call localStorage.setItem('theme', 'light')
+            else
+              show #moon-icon
+              hide #sun-icon
+              call localStorage.removeItem('theme')"
+        >
+          <i 
+            data-lucide="sun"
+            id="sun-icon"
+            class="w-4 h-4"
+            _="init if not the closest <.dark/> then show me else hide me"
+          ></i>
+          <i 
+            data-lucide="moon"
+            id="moon-icon"
+            class="w-4 h-4"
+            _="init if not the closest <.dark/> then hide me else show me"
+          ></i>
+        </button>
+
+        <!-- New Conversation -->
+        <button 
+          class="glass text-base grow rounded"
+          _="on click showModal() the #new-chat
+          call randomConvoName() then trigger changeName(name:it) on <.conversationName/>"
+        >
+          <i data-lucide="plus" class="w-4 h-4"></i>
+          <span class="text-xs text-mid">New Chat</span>
+        </button>
+
+        <!-- Toggle Sidebar -->
+        <button 
+          class="glass icon"
+          _="on click toggle .visible on #sidebar then toggle .opacity-0 on #sidebar-hidden-toggle then toggle .pointer-events-none on #sidebar-hidden-toggle"
+        >
+          <i 
+            data-lucide="panel-left"
+            class="w-4 h-4"
+          ></i>
+        </button>
+      </div>
+
+      <!-- Converations -->
+      <div class="grow relative">
+        <div class="inset-0 absolute overflow-y-auto p-2 flex flex-col gap-2" id="convo-container"></div>
+      </div>
+    </div>
+
+    <!-- Chat area -->
+    <div hx-ext="ws" ws-connect="/stream" class="flex flex-col z-0 md:border md:border-border shadow-2xl md:rounded-lg backdrop-blur-[3px] grow min-h-full bg-gradient-to-br from-accent/10 to-background/0">
+      <!-- Header -->
+      <div 
+        class="flex gap-1 p-1 border-b border-border"
+      >
+        <!-- Sidebar Toggle -->
+        <button 
+          class="glass icon opacity-0 pointer-events-none"
+          _="on click toggle .visible on #sidebar then toggle .opacity-0 on me then toggle .pointer-events-none on me"
+          id="sidebar-hidden-toggle"
+        >
+          <i 
+            data-lucide="panel-left"
+            class="w-4 h-4"
+          ></i>
+        </button>
+
+        <!-- Conversation Name / Edit -->
+        <div class="grow flex gap-1 justify-center">
+          <input 
+            class="border-b border-border p-1 h-9 bg-transparent text-foreground outline-none text-center focus:border-accent"
+            value=""
+            id="conversation-name"
+            _="on input
+              call loadConvos()
+              set convos to it
+              set the title of convos[$index] to my value
+              call localStorage.setItem('conversations', JSON.stringify(convos))
+              trigger setTitle(title: my value, index: $index) on <.convo-title/>"
+          />
+        </div>
+
+        <!-- Delete Conversation -->
+        <button 
+          class="glass icon"
+          id="delete-button"
+          _="init call evalDeleteOption() end
+          on click 
+            showModal() the #delete-modal
+            call loadConvos() then set conversations to it
+            set the innerText of #del-convo-name to conversations[$index].title"
+        >
+          <i 
+            data-lucide="trash"
+            class="w-4 h-4"
+          ></i>
+        </button>
+      </div>
+
+      <!-- Messages -->
+      <section class="flex flex-col grow relative p-2">
+        <div class="inset-0 overflow-y-auto absolute px-2 pb-2 scroll-container">
+          <div id="messages" class="flex flex-col"></div>
+
+          <!-- Introduction / Empty state -->
+          <div 
+            id="intro"
+            class="flex flex-col gap-2 items-center justify-center grow h-full"
+            _="init call loadConvos()
+            if the length of it is greater than 0 hide me else show me"
+          >
+            <h1 class="text-foreground text-4xl font-bold text-center">HTMX Chatbot</h1>
+            <p class="text-muted-foreground text-sm text-center">Not affiliated with htmx.org</p>
+            <button
+              _="on click showModal() the #new-chat
+              call randomConvoName() then trigger changeName(name:it) on <.conversationName/>"
+            >
+              <i data-lucide="plus" class="w-4 h-4"></i>
+              <span>New Chat</span>
+            </button>
+          </div>
+
+          <!-- Scrolls to the bottom of messages when a new one is streamed or appended -->
+          <div id="scroll-view"></div>
+        </div>
+      </section>
+      
+      <!-- Form -->
+      <form 
+        id="chat-form"
+        hx-on::ws-before-send="beforeChatRequest()"
+        class="flex gap-2 border-t border-border rounded-b-lg overflow-hidden"
+        ws-send
+      >
+        <input 
+          type="hidden" 
+          name="history" 
+          id="history"
+          value=""
+          hidden
+          _="init call loadConvos()
+          if the length of it is greater than 0
+            trigger open(index:0) on <div.convo-item/>
+          else
+            log 'no conversations'
+          end"
+        >
+        <input type="hidden" name="promptKey" id="promptKey" value="htmxOrg" hidden>
+        <textarea 
+          type="text" 
+          name="prompt"
+          id="prompt"
+          class="grow p-2 border-0 outline-0 bg-transparent text-foreground" 
+          style="max-height: 160px"
+          placeholder="Send a message..." 
+          autocomplete="off"
+          required
+          autofocus
+          disabled
+          _="on keydown[key is 'Enter' and not shiftKey]
+            halt the event
+            click() the #chat-button"
+        ></textarea>
+        <button id="chat-button" type="submit" class="glass !border-0 rounded-none rounded-tr-none">
+          <i data-lucide="send-horizontal" class="w-4 h-4"></i>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Dialog to create a new chat -->
+  <dialog id="new-chat">
+    <div class="flex flex-col gap-2">
+      <!-- Header -->
+      <div class="flex gap-2 justify-between items-start">
+        <div class="flex flex-col gap-0.5">
+          <span class="font-semibold text-lg">New Conversation</span>
+          <p class="text-xs text-muted-foreground">
+            <span>/</span>
+            <span
+              _="on changeName(name) set my innerText to name"
+              class="conversationName"
+            >
+            </span>
+            <span>(same thing)</span>
+          </p>
+        </div>
+        <button
+          class="bg-transparent text-foreground p-1.5 rounded hover:bg-muted transition-colors"
+          _="on click close() the #new-chat"
+        >
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <!-- Preset Selection -->
+      <label class="text-sm text-mid font-semibold">Choose a Preset</label>
+      <div class="flex flex-col gap-2 px-3 py-2 border border-border bg-background rounded-lg">
+        <div class="flex gap-2 justify-between">
+          <div 
+            class="flex flex-col gap-1 items-center cursor-pointer basis-0 min-w-[64px] shrink-0"
+            _="init set $preset to #htmxOrgPreset then add .selected to $preset
+  on click
+    remove .selected from $preset
+    set $preset to #htmxOrgPreset
+    add .selected to $preset
+    set the innerHTML of #presetdescription to 'Acts like <a href=\'https://twitter.com/@htmx_org\' target=\'_blank\' class=\'text-accent underline\'>@htmx_org</a>. Prioritizes humor. Great for catching up on HTMX lore.'
+    call randomConvoName() then trigger changeName(name:it) on <.conversationName/>"
+          >
+            <span class="text-xs text-center text-mid">htmx.org</span>
+            <img width="64" height="64" alt="htmxOrg" src="/public/images/bison.png" class="bg-white rounded border border-border" draggable="false" id="htmxOrgPreset"/>
+          </div>
+  
+          <div 
+            class="flex flex-col gap-1 items-center cursor-pointer basis-0 min-w-[64px] shrink-0"
+            _="on click
+    remove .selected from $preset
+    set $preset to #htmxCarsonPreset
+    add .selected to $preset
+    set the innerHTML of #presetdescription to 'Teacher / Technical Docs (same thing). Best for learning HTMX/Hyperscript'
+            call randomConvoName() then trigger changeName(name:it) on <.conversationName/>"
+          >
+            <span class="text-xs text-center whitespace-nowrap text-mid">Carson Gross</span>
+            <img width="64" height="64" alt="htmxCarson" src="/public/images/carson.png" class="bg-white rounded border border-border" draggable="false" id="htmxCarsonPreset"/>
+          </div>
+  
+          <div 
+            class="flex flex-col gap-1 items-center cursor-pointer basis-0 min-w-[64px] shrink-0"
+            _="on click
+    remove .selected from $preset
+    set $preset to #grugPreset
+    add .selected to $preset
+    set the innerHTML of #presetdescription to 'Caveman. Senior Programmer. Iliterate. Great for programming advice.'
+            call randomConvoName() then trigger changeName(name:it) on <.conversationName/>"
+          >
+            <span class="text-xs text-center text-mid">Grug</span>
+            <img width="64" height="64" alt="grug" src="/public/images/grug.png" class="bg-white rounded border border-border" draggable="false" id="grugPreset"/>
+          </div>
+        </div>
+  
+        <p class="text-muted-foreground text-sm text-center" id="presetdescription">Acts like <a href="https://twitter.com/@htmx_org" target="_blank" class="text-accent underline">@htmx_org</a>. Prioritizes humor. Great for catching up on HTMX lore.</p>
+      </div>
+
+      <!-- Conversation Name -->
+      <div class="flex flex-col gap-1">
+        <label for="conversationName" class="font-semibold text-sm text-mid">Conversation Name</label>
+        <input 
+          type="text" 
+          id="conversationName"
+          name="conversationName" 
+          class="w-full px-3 py-2 border border-border rounded-lg bg-background text-base conversationName text-sm" 
+          placeholder="Talk with Grug" 
+          _="on changeName(name) set @value to name"
+        />
+      </div>
+
+      <!-- Buttons -->
+      <div class="flex gap-2 justify-end">
+        <button
+          class="muted"
+          _="on click close() the #new-chat"
+        >Cancel</button>
+        <button
+          _="on click
+            // Load Conversations
+            call loadConvos() then set conversations to it
+
+            // Add a new conversation, reload
+            set conversation to { promptKey: the alt of $preset, history: '', title: the value of #conversationName, id: randomCid() }
+            call conversations.push(conversation)
+            call localStorage.setItem('conversations', JSON.stringify(conversations))
+
+            hide #intro
+          
+            // Fire selection event
+            call reloadConversations()
+            js return loadConvos().length - 1 end then set index to it
+            trigger open(index:index) on <div.convo-item/>
+            close() the #new-chat"
+        >Create</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Confirmation dialog when you delete a conversation -->
+  <dialog id="delete-modal">
+    <div class="flex flex-col gap-2">
+      <!-- Header -->
+      <div class="flex gap-2 justify-between items-center">
+        <span class="font-semibold text-lg">Delete Conversation?</span>
+        <button
+          class="bg-transparent text-foreground p-1.5 rounded hover:bg-muted transition-colors"
+          _="on click close() the #delete-modal"
+        >
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <p class="text-sm text-muted-foreground">Are you sure you would like to delete the conversation &quot;<span id="del-convo-name"></span>&quot;? This cannot be undone.</p>
+
+      <!-- Buttons -->
+      <div class="flex gap-2 justify-end">
+        <button
+          class="muted"
+          _="on click close() the #delete-modal"
+        >Cancel</button>
+        <button
+          _="on click
+          js return loadConvos().length end
+          if it is greater than 1
+            js return loadConvos().filter((_, i) => i !== $index) end then set conversations to it
+            call localStorage.setItem('conversations', JSON.stringify(conversations))
+            call reloadConversations()
+            trigger open(index:0) on <div.convo-item/>
+          end
+          close() the #delete-modal"
+        >Delete</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="https://cdn.jsdelivr.net/npm/autosize@6.0.1/dist/autosize.min.js"></script>
+  <script>
+    autosize(document.getElementById("prompt"))
+    
+    const commonBtn = 'py-2 px-4 font-bold rounded-md text-white';
+
+    // Once the form is submitted, disable the button and prompt input
+    function beforeChatRequest() {
+      const button = document.getElementById('chat-button');
+      const prompt = document.getElementById('prompt');
+      button.setAttribute('disabled', 'true');
+      prompt.setAttribute('disabled', 'true');
+    }
+
+    // promptKey <> image
+    const images = {
+      htmxOrg: '/public/images/bison.png',
+      htmxCarson: '/public/images/carson.png',
+      grug: '/public/images/grug.png',
+    }
+
+    // Conversation (sidebar) Hypermedia Template
+    const convoTemplate = (conv, i) => {
+      const div = document.createElement("div");
+      div.className = "flex rounded overflow-hidden w-full items-center border border-border cursor-pointer hover:bg-accent/10 convo-item";
+      div.id = `convo-${i}`;
+      div.setAttribute("_", `init call evalDeleteOption()
+      on click trigger open(index:${i}) end
+        on open(index)
+          if index equals ${i}
+            set $index to ${i}
+            remove .active from <div.active/>
+            add .active to me
+            call loadConvos() then set conversations to it
+            set the value of #promptKey to conversations[$index].promptKey
+            set the value of #history to conversations[$index].history
+            set the disabled of #prompt to ''
+            fetch \`/loadHistory?history=\$\{conversations[$index].history\}\`
+              set the innerHTML of #messages to the result
+              set the value of #conversation-name to conversations[$index].title
+              scrollIntoView() the #scroll-view
+              call hljs.highlightAll()
+          end`);
+      div.setAttribute("cid", conv.id);
+
+      const img = document.createElement("img");
+      img.src = images[conv.promptKey];
+      img.alt = conv.promptKey;
+      img.width = 36;
+      img.height = 36;
+      img.className = "bg-white rounded-l border-r border-border";
+
+      const span = document.createElement("span");
+      span.className = "truncate text-muted-foreground text-sm convo-title py-1 px-1.5";
+      span.textContent = conv.title;
+      span.setAttribute("_", `on setTitle(title, index)
+        if index equals ${i}
+          set my innerText to title`)
+
+      div.appendChild(img);
+      div.appendChild(span);
+
+      return div;
+    };
+
+    const container = document.getElementById('convo-container');
+    const convos = () => (JSON.parse(localStorage.getItem('conversations')) || []);
+
+    // Initially loads conversations into the sidebar
+    function loadConversations() {
+      convos().forEach((conv, i) => {
+        container.appendChild(convoTemplate(conv, i));
+      })
+    }
+
+    // Reloads conversations in the sidebar
+    function reloadConversations() {
+      container.innerHTML = "";
+      
+      convos().forEach((conv, i) => {
+        const child = convoTemplate(conv, i);
+
+        container.appendChild(child);
+        _hyperscript.processNode(child);
+      });
+    }
+
+    loadConversations();
+  </script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

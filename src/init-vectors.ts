@@ -2,7 +2,7 @@ import { embed } from "@replit/ai-modelfarm";
 import fs from "fs";
 import { globSync } from "glob";
 import { contextChunkSize } from "./config";
-import supabase from "./lib/supabase";
+import { supabase } from "./lib/supabase";
 import { chunkArray, padEmbedding } from "./lib/utils";
 
 /**

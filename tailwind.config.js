@@ -3,11 +3,15 @@ export default {
   darkMode: 'class',
   mode: "jit",
   purge: [
-    './static/**/*.html',
-    './static/**/*.css',
+    './public/**/*.html',
+    './public/**/*.css',
+    './src/hypermedia/**/*.ts'
   ],
   content: [],
   theme: {
+    fontFamily: {
+      'code': ['"Menlo"', '"Monaco"', '"Lucida Console"', '"Liberation Mono"', '"DejaVu Sans Mono"', '"Bitstream Vera Sans Mono"', '"Courier New"', 'monospace']
+    },
     extend: {
       colors: {
         border: "rgb(var(--border))",

@@ -4,7 +4,7 @@ Hyperdome, short for Hypermedia Thunderdome is an HTMX chatbot application famil
 
 - Live Demo: 🔗 https://h-t.mx
 - Fork on Github 🐱: https://github.com/IroncladDev/HTMXBot
-- Run on Replit: ⠕ https://replit.com/@IroncladDev/HTMXBot?v=1
+- Run on Replit: ⠕ https://replit.com/@IroncladDev/Hyperdome?v=1
 
 Hyperdome uses Google's [`text-bison`](https://cloud.google.com/vertex-ai/docs/generative-ai/model-reference/text) and [`textembedding-gecko`](https://cloud.google.com/vertex-ai/docs/generative-ai/model-reference/text-embeddings) models over [Replit Modelfarm](https://blog.replit.com/modelfarm).
 

@@ -22,9 +22,11 @@ export default async function stream({
     console.log(e);
   }
 
+  const fullPrompt = prompts[promptKey](relevantContext, prompt, prev);
+
   const completionResponse = await completeStream({
     model: "text-bison",
-    prompt: prompts[promptKey](relevantContext, prompt, prev),
+    prompt: fullPrompt,
     maxOutputTokens,
     temperature,
   });

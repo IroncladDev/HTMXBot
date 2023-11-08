@@ -1,7 +1,7 @@
 # HTMX Horse 
 The HTMX Horse, also known as the laser horse, is a classic HTMX mascot that has represented HTMX across tech twitter.
 
-![Image of the HTMX Laser Horse](https://pbs.twimg.com/media/F283uPvXYAIfCLi?format=png&name=small)
+![Image of the HTMX Laser Horse](https://pbs.twimg.com/profile_images/1721537649184317440/gDu3k_wP_400x400.jpg)
 
 ## Backstory
 

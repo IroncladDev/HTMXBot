@@ -1,7 +1,7 @@
 import { embed } from "@replit/ai-modelfarm";
 import fs from "fs";
 import { globSync } from "glob";
-import { contextChunkSize } from "./config";
+import { contextChunkSize, tableConfig } from "./config";
 import { supabase } from "./lib/supabase";
 import { chunkArray, padEmbedding } from "./lib/utils";
 
@@ -87,7 +87,7 @@ async function embedDataChunks(
   );
 
   // Insert updated embedding documents into the database
-  await supabase.from("htmx_docs").insert(embeddingDocuments);
+  await supabase.from(tableConfig.name).insert(embeddingDocuments);
 
   process.stdout.clearLine(0);
   process.stdout.cursorTo(0);
@@ -109,7 +109,7 @@ async function initializeVectors() {
   console.log(`Retrieved ${content.length} chunks of context data.`);
 
   // Remove existing context documents from the database table
-  await supabase.from("htmx_docs").delete().neq("id", 0);
+  await supabase.from(tableConfig.name).delete().neq("id", 0);
 
   console.log("Wiped database.");
 

@@ -167,8 +167,6 @@ const app = new Elysia()
       // Append the complete AI message to history
       hist.append(aiMessage);
 
-      console.log(hist.history);
-
       // Send the full history hidden input
       ws.send(hist.render());
     },

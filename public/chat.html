@@ -13,7 +13,8 @@
   <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/languages/xml.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/languages/typescript.min.js"></script>
   <link rel="stylesheet" href="/public/dist/styles.css">
-  <title>HTMX Chatbot</title>
+  <link rel="icon" href="/public/images/logo.svg" type="image/svg"/>
+  <title>Hyperdome</title>
   <script type="text/hyperscript">
     // Loads and returns all conversations from localStorage
     def loadConvos()
@@ -29,8 +30,8 @@
 
     // Generates a random conversation name
     def randomConvoName()
-      set topics to ["HTMX", "Shill", "Meme", "Code", "Codebase", "Bug", "Pain", "Hypermedia", "Stone Age", "Markup", "Frontend", "Backend", "Mid", "Library", "Framework", "Hyper"]
-      set verbs to ["talk", "chat", "conversation", "lecture", "debate", "discussion", "war", "gossip", "chatter", "thunderdome", "warzone", "warroom"]
+      set topics to ["HTMX", "Shill", "Meme", "Code", "Codebase", "Bug", "Pain", "Hypermedia", "Ownage", "Frontend", "Backend", "Mid", "Library", "Framework", "Debugging"]
+      set verbs to ["lecture", "debate", "discussion", "war", "gossip", "chatter", "thunderdome", "warzone", "warroom", "battlefield", "wastelands", "chatroom", "roast"]
       return `${random in topics} ${random in verbs}`
     end
 

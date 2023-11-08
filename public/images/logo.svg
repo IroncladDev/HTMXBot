@@ -1,0 +1,8 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+  <defs>
+    <style bx:fonts="Inter">@import url(https://fonts.googleapis.com/css2?family=Inter%3Aital%2Cwght%400%2C100%3B0%2C200%3B0%2C300%3B0%2C400%3B0%2C500%3B0%2C600%3B0%2C700%3B0%2C800%3B0%2C900&amp;display=swap);</style>
+  </defs>
+  <polygon style="fill: rgb(61, 114, 215);" points="61.418 23.121 31.292 53.881 48.392 53.76 33.677 77.13 68.708 45.343 49.368 46.067"></polygon>
+  <polygon style="fill: rgb(241, 245, 249);" points="25.891 26 25.891 40 11.891 50 25.891 61 25.891 74 3.891 55 3.891 45"></polygon>
+  <polygon style="transform-box: fill-box; transform-origin: 50% 50%; fill: rgb(241, 245, 249);" points="96.109 73.981 96.109 59.988 82.108 49.994 96.109 38.999 96.109 26.006 74.109 44.997 74.109 54.991" transform="matrix(-1, 0, 0, -1, -0.000011, 0.000004)"></polygon>
+</svg>

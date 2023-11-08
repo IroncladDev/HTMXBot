@@ -1,6 +1,6 @@
 import { embed } from "@replit/ai-modelfarm";
 import GPT3NodeTokenizer from "gpt3-tokenizer";
-import { expectedDimensions, maxInputTokens } from "../config";
+import { expectedDimensions, maxChunks, maxInputTokens, tableConfig } from "../config";
 import { client } from "./supabase";
 
 /**
@@ -41,10 +41,10 @@ export async function similaritySearch(query: string) {
 
   const paddedEmbedding = padEmbedding(value.embeddings[0].values);
 
-  const { data, error } = await client.rpc("match_htmx_docs", {
+  const { data, error } = await client.rpc(tableConfig.matchQuery, {
     query_embedding: paddedEmbedding,
     match_threshold: 0,
-    match_count: 5,
+    match_count: maxChunks,
   });
 
   if (error) {

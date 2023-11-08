@@ -6,33 +6,63 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hyperdome</title>
+
+  <meta
+    name="copyright"
+    content="Copyright 2023 IroncladDev. All rights reserved."
+  />
+  <meta name="robots" content="max-image-preview:large" />
+  <meta property="og:title" content="Hyperdome" />
+  <meta name="twitter:title" content="Hyperdome" />
+
+  <meta name="description" content="" />
+  <meta property="og:description" content="Hyperdome, short for Hypermedia Thunderdome is an HTMX chatbot application familiarized with HTMX, Hyperscript, tweets, memes, and lore." />
+  <meta name="twitter:description" content="Hyperdome, short for Hypermedia Thunderdome is an HTMX chatbot application familiarized with HTMX, Hyperscript, tweets, memes, and lore." />
+
+  <meta
+    property="og:image:secure_url"
+    content="https://h-t.mx/public/images/cover.png"
+  />
+
+  <meta property="og:url" content="https://h-t.mx" />
+  <meta name="twitter:url" content="https://h-t.mx" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Hyperdome" />
+  <meta property="og:locale" content="en_US" />
+
+  <meta property="og:image" content="https://h-t.mx/public/images/cover.png" />
+  <meta property="og:width" content="800" />
+  <meta property="og:height" content="600" />
+
+  <meta name="twitter:image" content="https://h-t.mx/public/images/cover.png" />
+  <meta name="twitter:image:src" content="https://h-t.mx/public/images/cover.png" />
+  <meta name="twitter:image:alt" content="Hyperdome" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@IroncladDev" />
+  <meta name="twitter:creator" content="@IroncladDev" />
+
+  <link rel="icon" href="/public/images/logo.svg" type="image/svg"/>
+  
   <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
   <script src="https://unpkg.com/htmx.org@1.9.6"></script>
   <link rel="stylesheet" href="/public/dist/styles.css">
   <link rel="stylesheet" href="/public/index.css"/>
   <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/languages/xml.min.js"></script>
-  <title>HTMX Chatbot</title>
 </head>
 <body class="flex flex-col bg-background text-foreground">
   <!-- Navbar -->
   <nav class="flex gap-2 items-center px-2 py-1.5 min-[512px]:px-4 min-[512px]:py-3 border-b border-border bg-background h-12 min-[512px]:h-16 bg-background">
-    <a class="inline-flex gap-2 select-none" href="/"/>  
-      <span class="inline-flex items-center">
-        <span class="font-bold text-2xl">&lt;</span>
-        <span class="inline-flex flex-col mx-0.5 mt-0.5 text-muted-foreground">
-          <span style="font-size: 8px;">AA</span>      
-          <span style="font-size: 8px;">AA</span>      
-        </span>
-        <span class="text-accent font-bold text-2xl">/</span><span class="font-bold text-2xl">&gt;</span>
+    <a class="inline-flex items-center gap-2 select-none" href="/"/>  
+      <span class="inline-flex items-center text-3xl">
+        <span class="font-bold">&lt;</span>
+        <img src="/public/images/bolt.svg" class="h-8" alt="Bolt"/>
+        <span class="font-bold">&gt;</span>
       </span>
-      <span class="hidden min-[512px]:inline-flex text-4xl font-semibold">
-        <span class="text-bold">H</span>
-        <span class="text-muted-foreground text-3xl self-end">A</span>
-        <span class="text-muted-foreground text-accent">A</span>
-        <span class="text-muted-foreground text-3xl">A</span>
-        <span class="text-muted-foreground text-3xl self-end">A</span>
-        <span class="text-accent">S</span>
+      <span class="hidden min-[512px]:inline-flex text-3xl font-semibold">
+        <span class="font-bold">Hyperdome</span>
       </span>
     </a>
     
@@ -57,22 +87,21 @@
       <div class="p-4 flex flex-col gap-4 items-center">
         <div class="flex flex-col items-center gap-2">
           <h1 
-            class="text-6xl md:text-8xl font-bold flex leading-none text-slate-100 opacity-0"
+            class="text-5xl md:text-7xl font-bold flex leading-none text-slate-100 opacity-0"
             _="init wait 500ms then transition my opacity to 1 over 1000ms"
           >
-            <span>&lt;H</span>
-            <span class="text-slate-400 text-5xl md:text-7xl self-end">A</span>
-            <span class="text-slate-400">A</span>
-            <span class="text-slate-400 text-5xl md:text-7xl">A</span>
-            <span class="text-slate-400 text-5xl md:text-7xl self-end">A</span>
-            <span class="text-accent">S</span>
-            <span>&gt;</span>
+            <span class="inline-flex items-center">
+              <span class="font-bold">&lt;</span>
+              <span>Hyperdome</span>
+              <img src="/public/images/bolt.svg" class="h-16" alt="Bolt"/>
+              <span class="font-bold">&gt;</span>
+            </span>
           </h1>
   
           <p 
             class="text-lg italic text-slate-100"
           >
-            <span class="opacity-0" _="init wait 1000ms then transition my opacity to 1 over 1000ms">Hypermedia And AI As A Service</span>
+            <span class="opacity-0" _="init wait 1000ms then transition my opacity to 1 over 1000ms">Hypermedia Thunderdome</span>
             <span class="opacity-0" _="init wait 1500ms then transition my opacity to 1 over 1000ms">/ HTMX Chatbot</span>
             <span class="opacity-0" _="init wait 2000ms then transition my opacity to 1 over 1000ms">(same thing)</span>
           </p>
@@ -373,17 +402,16 @@
     <div class="flex gap-4 py-4 max-w-3xl w-full">
       <div class="flex gap-2 flex-col">
         <h2 class="text-2xl font-bold flex leading-none text-slate-100">
-          <span>&lt;H</span>
-          <span class="text-slate-400 text-xl self-end">A</span>
-          <span class="text-slate-400">A</span>
-          <span class="text-slate-400 text-xl">A</span>
-          <span class="text-slate-400 text-xl self-end">A</span>
-          <span class="text-accent">S</span>
-          <span>&gt;</span>
+          <span class="inline-flex items-center">
+            <span class="font-bold">&lt;</span>
+            <span>Hyperdome</span>
+            <img src="/public/images/bolt.svg" class="h-8" alt="Bolt"/>
+            <span class="font-bold">&gt;</span>
+          </span>
         </h2>
 
         <p class="text-sm text-slate-400">
-          Hypermedia and AI as a Service / HTMX Chatbot (same thing)
+          Hypermedia thunderdome / HTMX Chatbot (same thing)
         </p>
       </div>
 

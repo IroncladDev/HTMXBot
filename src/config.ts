@@ -7,14 +7,18 @@ export const expectedDimensions = 1536;
 export const contextChunkSize = 1024;
 
 // Max input tokens
-export const maxInputTokens = 6000;
+export const maxInputTokens = 7168;
 
 // Max output tokens
-export const maxOutputTokens = 512;
+export const maxOutputTokens = 1024;
 
 // Model Tempurature
-export const temperature = 0;
+export const temperature = 0.5;
 
+// How many chunks of context to fetch each time the chatbot is prompted
+export const maxChunks = 5;
+
+// Preset prompts
 export const prompts: Record<
   string,
   (
@@ -27,7 +31,7 @@ export const prompts: Record<
     context: Array<string>,
     prompt: string,
     prev?: [ChatMessage, ChatMessage],
-  ) => `You are Carson Gross, the man behind the @htmx_org twitter account; the creator of HTMX, Hyperscript, and intercooler.js; and author of The Grug Brained Developer and Hypermedia Systems
+  ) => `You are the @htmx_org twitter account and the creator of HTMX & Hyperscript
 ==========
 SpeechStyle:
 - ALWAYS Talk from a first-person perspective
@@ -43,19 +47,19 @@ SpeechStyle:
 - NEVER continue the conversation unless the human asks you something
 - ALWAYS only produce a single response
 ==========
-This is the last thing the human said to you followed by your response:
+Use a combination of the following Context (not part of the conversation) to answer the Human while abiding by all the SpeechStyle rules:
+${context.map((x) => x.trim()).join("\n---\n")}
 ${
   prev
-    ? `Human: ${prev[0].content}
-Carson Gross: ${prev[1].content}`
+    ? `==========
+This is the last thing the Human said to you followed by your response:
+Human: ${prev[0].content}
+@htmx_org: ${prev[1].content}`
     : ""
 }
 ==========
-Use a combination of the following Context (not part of the conversation) to answer the Human while abiding by all the SpeechStyle rules:
-${context.map((x) => x.trim()).join("\n---\n")}
-==========
 Human: ${prompt}
-Carson Gross:`,
+@htmx_org:`,
   htmxCarson: (
     context: Array<string>,
     prompt: string,
@@ -73,16 +77,16 @@ SpeechStyle:
 - NEVER continue the conversation unless the human asks you something
 - ALWAYS only produce a single response
 ==========
-This is the last thing the human said to you followed by your response:
+Use a combination of the following Context (not part of the conversation) to answer the Human while abiding by all the SpeechStyle rules:
+${context.map((x) => x.trim()).join("\n---\n")}
 ${
   prev
-    ? `Human: ${prev[0].content}
+    ? `==========
+This is the last thing the human said to you followed by your response:
+Human: ${prev[0].content}
 Carson Gross: ${prev[1].content}`
     : ""
 }
-==========
-Use a combination of the following Context (not part of the conversation) to answer the Human while abiding by all the SpeechStyle rules:
-${context.map((x) => x.trim()).join("\n---\n")}
 ==========
 Human: ${prompt}
 Carson Gross:`,
@@ -105,21 +109,22 @@ SpeechStyle:
 - ALWAYS only produce a single response
 - NEVER mention "Human:" or "Carson Gross:"
 ==========
-Utilize your last response to the Human ONLY IF the Human asks you a follow-up question:
+Use a combination of the following Context (not part of the conversation) to answer the Human while abiding by all the SpeechStyle rules:
+${context.map((x) => x.trim()).join("\n---\n")}
 ${
   prev
-    ? `Human: ${prev[0].content}
+    ? `==========
+This is the last thing the human said to you followed by your response:
+Human: ${prev[0].content}
 Grug: ${prev[1].content}`
     : ""
 }
-==========
-Use a combination of the following Context (not part of the conversation) to answer the Human while abiding by all the SpeechStyle rules:
-${context.map((x) => x.trim()).join("\n---\n")}
 ==========
 Human: ${prompt}
 Grug:`,
 };
 
+// Prompt Preset Metadata
 export const promptAuthors: Record<
   keyof typeof prompts,
   {
@@ -145,6 +150,7 @@ export const promptAuthors: Record<
   },
 };
 
+// Allowed HTML Tags over Markdown
 export const allowedTags = [
   "a",
   "br",
@@ -167,3 +173,9 @@ export const allowedTags = [
   "div",
   "p",
 ];
+
+// Vector table name / match query. Environment vars are optional if you want to use a different name / match query.
+export const tableConfig = {
+  name: process.env.DOC_TABLE_NAME || "documents",
+  matchQuery: process.env.DOC_MATCH_QUERY || "match_documents"
+}

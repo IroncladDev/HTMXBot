@@ -10,6 +10,6 @@ disableGuessImports = true
 channel = "stable-22_11"
 
 [deployment]
-build = ["sh", "-c", "bun run build"]
+build = ["bun", "run", "build"]
 run = ["bun", "src/index.ts"]
 deploymentTarget = "cloudrun"

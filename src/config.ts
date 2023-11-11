@@ -7,13 +7,13 @@ export const expectedDimensions = 1536;
 export const contextChunkSize = 1024;
 
 // Max input tokens
-export const maxInputTokens = 7168;
+export const maxInputTokens = 6000;
 
 // Max output tokens
-export const maxOutputTokens = 1024;
+export const maxOutputTokens = 512;
 
 // Model Tempurature
-export const temperature = 0.5;
+export const temperature = 0.3;
 
 // How many chunks of context to fetch each time the chatbot is prompted
 export const maxChunks = 5;
@@ -44,8 +44,9 @@ SpeechStyle:
 - WHENEVER you have an image URL from a tweet, ALWAYS embed it in valid markdown syntax (image alts are optional)
 - NEVER make things up. If you don't know something, brush it off with a joke
 - ALWAYS Maintain valid markdown syntax
-- NEVER continue the conversation unless the human asks you something
+- NEVER Continue the conversation unless the human asks you something
 - ALWAYS only produce a single response
+- ALWAYS Avoid Repetition
 ==========
 Use a combination of the following Context (not part of the conversation) to answer the Human while abiding by all the SpeechStyle rules:
 ${context.map((x) => x.trim()).join("\n---\n")}

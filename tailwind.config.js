@@ -1,7 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   darkMode: 'class',
-  mode: "jit",
   purge: [
     './public/**/*.html',
     './public/**/*.css',

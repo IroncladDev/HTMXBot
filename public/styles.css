@@ -19,10 +19,28 @@
     --muted: 30 41 59;
     --muted-foreground: 100 116 139;
   }
-}
 
-body, html {
-  scroll-behavior: smooth;
+  body, html {
+    scroll-behavior: smooth;
+  }
+
+  /* Buttons */
+  button {
+    @apply rounded-lg px-3 py-2 text-sm text-foreground bg-accent hover:bg-accent/50 transition-colors whitespace-nowrap cursor-pointer flex gap-1 items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  button.muted {
+    @apply bg-muted border border-border hover:bg-muted/50;
+  }
+  button.glass {
+    @apply bg-accent/10 hover:bg-accent/20 border border-border;
+  }
+  button.icon {
+    @apply w-9 h-9 rounded p-2;
+  }
+
+  /* Dialog / backdrop */
+  dialog { @apply p-4 min-w-[240px] max-w-xs min-h-[160px] max-h-[90vh] bg-background/95 bg-gradient-to-br from-accent/10 to-background/25 rounded-lg border border-border text-foreground mt-24 }
+  ::backdrop { @apply bg-slate-950/50 backdrop-blur-[4px] }
 }
 
 /* Avatar */
@@ -54,10 +72,6 @@ body, html {
 .scroll-container::-webkit-scrollbar-track { @apply bg-black/5 dark:bg-black/10 }
 .scroll-container::-webkit-scrollbar-thumb { @apply bg-slate-400 dark:bg-slate-700 rounded-2xl }
 
-/* Dialog / backdrop */
-dialog { @apply p-4 min-w-[240px] max-w-xs min-h-[160px] max-h-[90vh] bg-background/95 bg-gradient-to-br from-accent/10 to-background/25 rounded-lg border border-border text-foreground mt-24 }
-::backdrop { @apply bg-slate-950/50 backdrop-blur-[4px] }
-
 /* Selected preset image */
 .selected { @apply ring-2 ring-accent ring-offset-transparent }
 
@@ -70,20 +84,6 @@ dialog { @apply p-4 min-w-[240px] max-w-xs min-h-[160px] max-h-[90vh] bg-backgro
 
 /* Conditional text color for dark/light */
 .text-mid { @apply text-slate-800 dark:text-slate-400 }
-
-/* Buttons */
-button {
-  @apply rounded-lg px-3 py-2 text-sm text-foreground bg-accent hover:bg-accent/50 transition-colors whitespace-nowrap cursor-pointer flex gap-1 items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed;
-}
-button.muted {
-  @apply bg-muted border border-border hover:bg-muted/50;
-}
-button.glass {
-  @apply bg-accent/10 hover:bg-accent/20 border border-border;
-}
-button.icon {
-  @apply w-9 h-9 rounded p-2;
-}
 
 /* Markdown styles */
 .markdown { @apply flex flex-col gap-2 text-slate-800 dark:text-slate-400 text-sm }
